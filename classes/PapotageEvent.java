@@ -1,11 +1,20 @@
 public class PapotageEvent {
     // ATTRIBUTS
-    private String sujet;
-    private String corps;
+    private final String sujet;
+    private final String corps;
 
     // CONSTRUCTEUR
     public PapotageEvent(String sujet, String corps) {
         this.sujet = sujet;
         this.corps = corps;
+    }
+
+    // GETTERS
+    public String getSujet() {
+        return sujet;
+    }
+
+    public String getCorps() {
+        return corps;
     }
 }
