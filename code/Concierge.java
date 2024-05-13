@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 class Concierge implements PapotageListener {
     private final List<Bavard> bavards = new ArrayList<>();
@@ -8,9 +10,13 @@ class Concierge implements PapotageListener {
         bavards.add(bavard);
     }
 
+    public void supprimerBavard(Bavard bavard) {
+        bavards.remove(bavard);
+    }
+
     public void transmettreMessage(PapotageEvent event) {
-        for (PapotageListener listener : bavards) {
-            listener.onPapotageEventReceived(event);
+        for (Bavard bavard : bavards) {
+            bavard.onPapotageEventReceived(event);
         }
     }
 

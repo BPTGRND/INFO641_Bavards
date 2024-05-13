@@ -6,13 +6,14 @@ class Batiment {
     }
 
     public Bavard creerBavard(String nom) {
-        Bavard bavard = new Bavard(nom);
-        concierge.ajouterBavard(bavard);
-        return bavard;
+        return new Bavard(nom);
     }
 
     public void connecterBavard(Bavard bavard) {
         concierge.ajouterBavard(bavard);
+    }
+    public void deconnecterBavard(Bavard bavard) {
+        concierge.supprimerBavard(bavard);
     }
 
     public Concierge getConcierge() {
