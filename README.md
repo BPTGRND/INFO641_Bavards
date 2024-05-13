@@ -43,7 +43,7 @@ L'objectif principal de ce projet est de maîtriser le mécanisme de communicati
 
 1. Clonez ce dépôt sur votre machine :
    ```
-   git clone https://github.com/votre-utilisateur/epapotage.git
+   git clone https://github.com/BPTGRND/INFO641_Bavards.git
    ```
 2. Ouvrez le projet dans votre IDE Java préféré.
 3. Compilez et exécutez l'application.
@@ -54,4 +54,4 @@ L'objectif principal de ce projet est de maîtriser le mécanisme de communicati
 
 ## Licence
 
-Ce projet est sous licence MIT - voir le fichier [LICENSE.md](LICENSE.md) pour plus de détails.
+Ce projet est sous licence MIT - voir le fichier [LICENSE.md](LICENSE) pour plus de détails.
