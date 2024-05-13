@@ -10,5 +10,7 @@ public class Main {
 
         bavard1.envoyerMessage(batiment.getConcierge(), "Important", "C'est cool !");
         bavard2.envoyerMessage(batiment.getConcierge(), "Réunion", "Le 05/10");
+
+        new InterfaceBatiment(batiment);
     }
 }

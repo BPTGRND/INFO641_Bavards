@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 class Batiment {
     private final Concierge concierge;
 
@@ -6,17 +8,28 @@ class Batiment {
     }
 
     public Bavard creerBavard(String nom) {
-        return new Bavard(nom);
+        Bavard newBavard = new Bavard(nom);
+        concierge.ajouterBavard(newBavard);
+        return newBavard;
     }
 
     public void connecterBavard(Bavard bavard) {
-        concierge.ajouterBavard(bavard);
+        concierge.connecterBavard(bavard);
     }
     public void deconnecterBavard(Bavard bavard) {
-        concierge.supprimerBavard(bavard);
+        concierge.deconnecterBavard(bavard);
     }
 
     public Concierge getConcierge() {
         return concierge;
+    }
+
+    public Bavard getBavard(String nom) {
+        for (Bavard b : concierge.getBavards()) {
+            if (Objects.equals(b.getNom(), nom)) {
+                return b;
+            }
+        }
+        return null;
     }
 }
