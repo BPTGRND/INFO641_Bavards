@@ -1,19 +1,21 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class Batiment {
-    // ATTRIBUTS
+class Batiment {
     private final Concierge concierge;
-    private final List<Bavard> bavards = new ArrayList<>();
 
-    // CONSTRUCTEUR
     public Batiment() {
-        concierge = new Concierge();
+        this.concierge = new Concierge();
     }
 
-    // METHODES
-    public void ajouterBavard(Bavard b) {
-        bavards.add(b);
-        concierge.ajouterPapotageListener(b);
+    public Bavard creerBavard(String nom) {
+        Bavard bavard = new Bavard(nom);
+        concierge.ajouterBavard(bavard);
+        return bavard;
+    }
+
+    public void connecterBavard(Bavard bavard) {
+        concierge.ajouterBavard(bavard);
+    }
+
+    public Concierge getConcierge() {
+        return concierge;
     }
 }

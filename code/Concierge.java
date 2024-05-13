@@ -1,25 +1,21 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Concierge implements PapotageListener {
-    // ATTRIBUT
-    private final List<PapotageListener> listeners = new ArrayList<>();
+class Concierge implements PapotageListener {
+    private final List<Bavard> bavards = new ArrayList<>();
 
-    // EVENEMENT
-    @Override
-    public void onPapotageEventReceived(PapotageEvent event) {
-        for (PapotageListener listener : listeners) {
+    public void ajouterBavard(Bavard bavard) {
+        bavards.add(bavard);
+    }
+
+    public void transmettreMessage(PapotageEvent event) {
+        for (PapotageListener listener : bavards) {
             listener.onPapotageEventReceived(event);
         }
     }
 
-    // METHODES
-    public void ajouterPapotageListener(PapotageListener l) {
-        listeners.add(l);
-    }
+    @Override
+    public void onPapotageEventReceived(PapotageEvent event) {
 
-    public void enleverPapotageListener(PapotageListener l) {
-        listeners.remove(l);
     }
-
 }

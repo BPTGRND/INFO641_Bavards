@@ -1,29 +1,16 @@
-import java.util.ArrayList;
-import java.util.List;
+class Bavard implements PapotageListener {
+    private final String nom;
 
-public class Bavard implements PapotageListener {
-    // ATTRIBUT
-    private final List<PapotageListener> listeners = new ArrayList<>();
+    public Bavard(String nom) {
+        this.nom = nom;
+    }
 
-    // EVENEMENT
+    public void envoyerMessage(Concierge concierge, String sujet, String corps) {
+        concierge.transmettreMessage(new PapotageEvent(sujet, corps));
+    }
+
     @Override
     public void onPapotageEventReceived(PapotageEvent event) {
-
-    }
-
-    // METHODES
-    public void envoyerPapotage(String sujet, String corps) {
-        PapotageEvent event = new PapotageEvent(sujet, corps);
-        for (PapotageListener listener : listeners) {
-            listener.onPapotageEventReceived(event);
-        }
-    }
-
-    public void ajouterPapotageListener(PapotageListener l) {
-        listeners.add(l);
-    }
-
-    public void enleverPapotageListener(PapotageListener l) {
-        listeners.remove(l);
+        System.out.println(nom + " a reçu un message : " + event.getSujet() + " - " + event.getCorps());
     }
 }
