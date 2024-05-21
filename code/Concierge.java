@@ -27,10 +27,6 @@ class Concierge implements PapotageListener {
         notifyObservers();
     }
 
-    @Override
-    public void onPapotageEventReceived(PapotageEvent event) {
-    }
-
     public List<Bavard> getBavards() {
         return bavards;
     }
@@ -47,9 +43,30 @@ class Concierge implements PapotageListener {
         observers.add(observer);
     }
 
+    public void onPapotageEventReceived(PapotageEvent event) {
+    }
+
     private void notifyObservers() {
         for (MessageObserver observer : observers) {
             observer.updateMessages();
+        }
+    }
+
+    public void notifyOnlineEvent(Bavard bavard) {
+        transmettreMessage(new PapotageEvent("S'est connecté !", "", bavard));
+        for (MessageObserver observer : observers) {
+            if (observer instanceof OnLineBavardListener) {
+                ((OnLineBavardListener) observer).onOnLineBavardEventReceived();
+            }
+        }
+    }
+
+    public void OffLineBavardEvent(Bavard bavard) {
+        transmettreMessage(new PapotageEvent("S'est déconnecté !", "", bavard));
+        for (MessageObserver observer : observers) {
+            if (observer instanceof OffLineBavardListener) {
+                ((OffLineBavardListener) observer).onOffLineBavardEventReceived();
+            }
         }
     }
 }

@@ -34,6 +34,5 @@ public class InterfaceConcierge extends JFrame implements MessageObserver {
                 listModelMessages.addElement(message.getSource().getNom() + ": " + message.getSujet() + " - " + message.getCorps());
             }
         }
-
     }
 }

@@ -64,6 +64,7 @@ public class InterfaceBatiment extends JFrame {
                 b.connecterBavard(bavard);
                 updateBavardList();
                 JOptionPane.showMessageDialog(InterfaceBatiment.this, "Le bavard " + selectedBavard + " à été connecté avec succès !");
+                batiment.getConcierge().notifyOnlineEvent(bavard);
                 new InterfaceBavard(bavard, batiment);
             } else {
                 JOptionPane.showMessageDialog(InterfaceBatiment.this, "Veuillez sélectionner un bavard à connecter.");
