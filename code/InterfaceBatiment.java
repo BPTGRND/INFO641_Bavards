@@ -3,11 +3,8 @@ import java.awt.*;
 
 public class InterfaceBatiment extends JFrame {
     private final Batiment batiment;
-    private final JLabel labelNom;
     private final JTextField textFieldNom;
-    private final JButton buttonCreerBavard;
     private final JComboBox<String> comboBoxBavards;
-    private final JButton buttonConnecter;
 
     public InterfaceBatiment(Batiment b) {
         this.batiment = b;
@@ -19,20 +16,20 @@ public class InterfaceBatiment extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
-        labelNom = new JLabel("Nom du Bavard:");
+        JLabel labelNom = new JLabel("Nom du Bavard:");
         add(labelNom);
 
         textFieldNom = new JTextField(15);
         add(textFieldNom);
 
-        buttonCreerBavard = new JButton("Créer Bavard");
+        JButton buttonCreerBavard = new JButton("Créer Bavard");
         add(buttonCreerBavard);
 
         comboBoxBavards = new JComboBox<>();
         comboBoxBavards.setPreferredSize(new Dimension(200, 30));
         add(comboBoxBavards);
 
-        buttonConnecter = new JButton("Connecter");
+        JButton buttonConnecter = new JButton("Connecter");
         add(buttonConnecter);
 
         buttonCreerBavard.addActionListener(e -> {

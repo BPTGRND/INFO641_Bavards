@@ -4,16 +4,12 @@ import java.util.List;
 
 public class InterfaceBavard extends JFrame implements MessageObserver {
     private final Bavard bavard;
-    private final Batiment batiment;
     private final JTextArea textAreaMessage;
     private final JTextField textFieldSujet;
-    private final JButton buttonEnvoyer;
     private final DefaultListModel<String> listModelEvenements;
-    private final JList<String> listEvenements;
 
     public InterfaceBavard(Bavard bavard, Batiment batiment) {
         this.bavard = bavard;
-        this.batiment = batiment;
 
         setTitle("Interface Bavard - " + bavard.getNom());
         setSize(400, 300);
@@ -30,11 +26,11 @@ public class InterfaceBavard extends JFrame implements MessageObserver {
 
         add(panelMessage, BorderLayout.NORTH);
 
-        buttonEnvoyer = new JButton("Envoyer");
+        JButton buttonEnvoyer = new JButton("Envoyer");
         add(buttonEnvoyer, BorderLayout.CENTER);
 
         listModelEvenements = new DefaultListModel<>();
-        listEvenements = new JList<>(listModelEvenements);
+        JList<String> listEvenements = new JList<>(listModelEvenements);
         JScrollPane scrollPaneEvenements = new JScrollPane(listEvenements);
         add(scrollPaneEvenements, BorderLayout.SOUTH);
 

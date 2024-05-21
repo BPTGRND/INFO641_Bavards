@@ -5,7 +5,6 @@ import java.util.List;
 public class InterfaceConcierge extends JFrame implements MessageObserver {
     private final Batiment batiment;
     private final DefaultListModel<String> listModelMessages;
-    private final JList<String> listMessages;
 
     public InterfaceConcierge(Batiment batiment) {
         this.batiment = batiment;
@@ -16,7 +15,7 @@ public class InterfaceConcierge extends JFrame implements MessageObserver {
         setLayout(new BorderLayout());
 
         listModelMessages = new DefaultListModel<>();
-        listMessages = new JList<>(listModelMessages);
+        JList<String> listMessages = new JList<>(listModelMessages);
         JScrollPane scrollPane = new JScrollPane(listMessages);
         add(scrollPane, BorderLayout.CENTER);
 

@@ -5,6 +5,7 @@ class Batiment {
 
     public Batiment() {
         this.concierge = new Concierge();
+        new InterfaceBatiment(this);
     }
 
     public Bavard creerBavard(String nom) {
