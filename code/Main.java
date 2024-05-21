@@ -8,9 +8,8 @@ public class Main {
         batiment.connecterBavard(bavard2);
         batiment.connecterBavard(bavard3);
 
-        bavard1.envoyerMessage(batiment.getConcierge(), "Important", "C'est cool !");
-        bavard2.envoyerMessage(batiment.getConcierge(), "Réunion", "Le 05/10");
-
-        new InterfaceBatiment(batiment);
+        InterfaceBatiment interfaceBatiment = new InterfaceBatiment(batiment);
+        InterfaceSelectionBavard interfaceSelectionBavard = new InterfaceSelectionBavard(batiment);
+        interfaceBatiment.addObserver(interfaceSelectionBavard);
     }
 }

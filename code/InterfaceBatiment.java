@@ -1,16 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InterfaceBatiment extends JFrame {
     private final Batiment batiment;
     private final JLabel labelNom;
     private final JTextField textFieldNom;
     private final JButton buttonCreerBavard;
-    private final JComboBox<String> comboBoxBavards; // Utiliser String ici
-    private final JButton buttonConnecter; // Bouton Connecter
+    private final JComboBox<String> comboBoxBavards;
+    private final JButton buttonConnecter;
+
+    private final List<SelectionBavardObserver> observers;
 
     public InterfaceBatiment(Batiment b) {
         this.batiment = b;
+        this.observers = new ArrayList<>();
 
         setTitle("Interface Batiment");
         setSize(300, 200);
@@ -28,7 +33,6 @@ public class InterfaceBatiment extends JFrame {
 
         comboBoxBavards = new JComboBox<>();
         comboBoxBavards.setPreferredSize(new Dimension(200, 30));
-        updateComboBox();
         add(comboBoxBavards);
 
         buttonConnecter = new JButton("Connecter");
@@ -40,6 +44,7 @@ public class InterfaceBatiment extends JFrame {
                 Bavard bavard = b.creerBavard(nom);
                 comboBoxBavards.addItem(bavard.getNom());
                 textFieldNom.setText("");
+                updateBavardList();
                 JOptionPane.showMessageDialog(InterfaceBatiment.this, "Le bavard " + nom + " à été créé avec succès !");
             } else {
                 JOptionPane.showMessageDialog(InterfaceBatiment.this, "Veuillez saisir un nom pour le bavard.");
@@ -51,17 +56,19 @@ public class InterfaceBatiment extends JFrame {
             if (selectedBavard != null) {
                 Bavard bavard = b.getBavard(selectedBavard);
                 b.connecterBavard(bavard);
-                updateComboBox();
+                notifyObservers();
+                updateBavardList();
                 JOptionPane.showMessageDialog(InterfaceBatiment.this, "Le bavard " + selectedBavard + " à été connecté avec succès !");
             } else {
                 JOptionPane.showMessageDialog(InterfaceBatiment.this, "Veuillez sélectionner un bavard à connecter.");
             }
         });
 
+        updateBavardList();
         setVisible(true);
     }
 
-    private void updateComboBox() {
+    public void updateBavardList() {
         comboBoxBavards.removeAllItems();
         for (Bavard bavard : batiment.getConcierge().getBavards()) {
             if (!batiment.getConcierge().getConnectedBavards().contains(bavard)) {
@@ -69,4 +76,18 @@ public class InterfaceBatiment extends JFrame {
             }
         }
     }
+
+    public void addObserver(SelectionBavardObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (SelectionBavardObserver observer : observers) {
+            observer.updateBavardListConnected();
+        }
+    }
+}
+
+interface SelectionBavardObserver {
+    void updateBavardListConnected();
 }
