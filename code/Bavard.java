@@ -1,5 +1,9 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Bavard implements PapotageListener {
     private final String nom;
+    private final List<PapotageEvent> messages = new ArrayList<>();
 
     public Bavard(String nom) {
         this.nom = nom;
@@ -12,11 +16,15 @@ class Bavard implements PapotageListener {
     @Override
     public void onPapotageEventReceived(PapotageEvent event) {
         if (!event.getSource().equals(this)) {
-            System.out.println(nom + " a reçu un message de " + event.getSource().getNom() + " : " + event.getSujet() + " - " + event.getCorps());
+            messages.add(event);
         }
     }
 
     public String getNom() {
         return nom;
+    }
+
+    public List<PapotageEvent> getMessages() {
+        return messages;
     }
 }

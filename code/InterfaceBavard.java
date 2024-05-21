@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class InterfaceBavard extends JFrame {
+public class InterfaceBavard extends JFrame implements MessageObserver {
     private final Bavard bavard;
     private final Concierge concierge;
     private final JTextArea textAreaMessage;
@@ -14,6 +14,8 @@ public class InterfaceBavard extends JFrame {
     public InterfaceBavard(Bavard bavard, Concierge concierge) {
         this.bavard = bavard;
         this.concierge = concierge;
+
+        concierge.addObserver(this);
 
         setTitle("Interface Bavard - " + bavard.getNom());
         setSize(400, 300);
@@ -46,22 +48,22 @@ public class InterfaceBavard extends JFrame {
                 textFieldSujet.setText("");
                 textAreaMessage.setText("");
                 JOptionPane.showMessageDialog(InterfaceBavard.this, "Message envoyé avec succès !");
-                updateEventList();
+                updateMessages();
             } else {
                 JOptionPane.showMessageDialog(InterfaceBavard.this, "Veuillez saisir un sujet et un message avant d'envoyer.");
             }
         });
 
-        updateEventList();
+        updateMessages();
         setVisible(true);
     }
 
-    public void updateEventList() {
+    public void updateMessages() {
         listModelEvenements.clear();
-        List<PapotageEvent> evenements = concierge.getMessages();
+        List<PapotageEvent> evenements = bavard.getMessages();
         for (PapotageEvent event : evenements) {
             if (!event.getSource().equals(bavard)) {
-                listModelEvenements.addElement(event.getSujet() + ": " + event.getCorps());
+                listModelEvenements.addElement(event.getSource().getNom() + ": " + event.getSujet() + " - " + event.getCorps());
             }
         }
     }

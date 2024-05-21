@@ -2,7 +2,6 @@ public class PapotageEvent {
     // ATTRIBUTS
     private final String sujet;
     private final String corps;
-
     private final Bavard source;
 
     // CONSTRUCTEUR
