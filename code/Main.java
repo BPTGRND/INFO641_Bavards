@@ -3,6 +3,5 @@ public class Main {
         Batiment batiment = new Batiment();
 
         new InterfaceBatiment(batiment);
-        new InterfaceConcierge(batiment);
     }
 }

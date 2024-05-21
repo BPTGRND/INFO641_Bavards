@@ -12,6 +12,8 @@ public class InterfaceBatiment extends JFrame {
     public InterfaceBatiment(Batiment b) {
         this.batiment = b;
 
+        new InterfaceConcierge(batiment);
+
         setTitle("Interface Batiment");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
