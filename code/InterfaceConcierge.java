@@ -22,7 +22,6 @@ public class InterfaceConcierge extends JFrame implements MessageObserver {
 
         batiment.getConcierge().addObserver(this);
         updateMessages();
-
         setVisible(true);
     }
 

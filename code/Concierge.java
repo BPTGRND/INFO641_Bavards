@@ -43,15 +43,6 @@ class Concierge implements PapotageListener {
         return messages;
     }
 
-    public Bavard getBavardByName(String nom) {
-        for (Bavard b : bavards) {
-            if (Objects.equals(b.getNom(), nom)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
     public void addObserver(MessageObserver observer) {
         observers.add(observer);
     }

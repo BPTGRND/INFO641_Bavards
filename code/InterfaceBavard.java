@@ -4,18 +4,16 @@ import java.util.List;
 
 public class InterfaceBavard extends JFrame implements MessageObserver {
     private final Bavard bavard;
-    private final Concierge concierge;
+    private final Batiment batiment;
     private final JTextArea textAreaMessage;
     private final JTextField textFieldSujet;
     private final JButton buttonEnvoyer;
     private final DefaultListModel<String> listModelEvenements;
     private final JList<String> listEvenements;
 
-    public InterfaceBavard(Bavard bavard, Concierge concierge) {
+    public InterfaceBavard(Bavard bavard, Batiment batiment) {
         this.bavard = bavard;
-        this.concierge = concierge;
-
-        concierge.addObserver(this);
+        this.batiment = batiment;
 
         setTitle("Interface Bavard - " + bavard.getNom());
         setSize(400, 300);
@@ -44,7 +42,7 @@ public class InterfaceBavard extends JFrame implements MessageObserver {
             String sujet = textFieldSujet.getText();
             String messageTexte = textAreaMessage.getText();
             if (!sujet.isEmpty() && !messageTexte.isEmpty()) {
-                bavard.envoyerMessage(concierge, sujet, messageTexte);
+                bavard.envoyerMessage(batiment.getConcierge(), sujet, messageTexte);
                 textFieldSujet.setText("");
                 textAreaMessage.setText("");
                 JOptionPane.showMessageDialog(InterfaceBavard.this, "Message envoyé avec succès !");
@@ -54,6 +52,7 @@ public class InterfaceBavard extends JFrame implements MessageObserver {
             }
         });
 
+        batiment.getConcierge().addObserver(this);
         updateMessages();
         setVisible(true);
     }
