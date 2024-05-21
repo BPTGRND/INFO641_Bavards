@@ -27,8 +27,13 @@ public class InterfaceConcierge extends JFrame implements MessageObserver {
     public void updateMessages() {
         listModelMessages.clear();
         List<PapotageEvent> messages = batiment.getConcierge().getMessages();
-        for (PapotageEvent message : messages) {
-            listModelMessages.addElement(message.getSource().getNom() + ": " + message.getSujet() + " - " + message.getCorps());
+        if (messages.isEmpty()) {
+            listModelMessages.addElement("Aucun message pour le moment...");
+        } else {
+            for (PapotageEvent message : messages) {
+                listModelMessages.addElement(message.getSource().getNom() + ": " + message.getSujet() + " - " + message.getCorps());
+            }
         }
+
     }
 }

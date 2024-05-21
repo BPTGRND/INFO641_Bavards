@@ -55,10 +55,14 @@ public class InterfaceBavard extends JFrame implements MessageObserver {
 
     public void updateMessages() {
         listModelEvenements.clear();
-        List<PapotageEvent> evenements = bavard.getMessages();
-        for (PapotageEvent event : evenements) {
-            if (!event.getSource().equals(bavard)) {
-                listModelEvenements.addElement(event.getSource().getNom() + ": " + event.getSujet() + " - " + event.getCorps());
+        List<PapotageEvent> messages = bavard.getMessages();
+        if (messages.isEmpty()) {
+            listModelEvenements.addElement("Aucun message reçu pour le moment...");
+        } else {
+            for (PapotageEvent message : messages) {
+                if (!message.getSource().equals(bavard)) {
+                    listModelEvenements.addElement(message.getSource().getNom() + ": " + message.getSujet() + " - " + message.getCorps());
+                }
             }
         }
     }
