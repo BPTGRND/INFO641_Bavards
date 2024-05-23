@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class InterfaceBavard extends JFrame implements MessageObserver, OnLineBavardListener, OffLineBavardListener {
+public class InterfaceBavard extends JFrame implements MessageListener, OnLineBavardListener, OffLineBavardListener {
     private final Bavard bavard;
     private final Batiment batiment;
     private final JTextField textFieldSujet;
@@ -15,44 +15,43 @@ public class InterfaceBavard extends JFrame implements MessageObserver, OnLineBa
         this.batiment = batiment;
 
         setTitle("Interface Bavard - " + bavard.getNom());
-        setSize(600, 400);
+        setSize(400, 350);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(new BorderLayout());
+
+        JPanel panelMain = new JPanel(new BorderLayout());
 
         JPanel panelMessage = new JPanel(new BorderLayout());
         panelMessage.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        JPanel panelSujet = new JPanel(new BorderLayout());
         JLabel labelSujet = new JLabel("Sujet :");
         textFieldSujet = new JTextField();
-        panelMessage.add(labelSujet, BorderLayout.WEST);
-        panelMessage.add(textFieldSujet, BorderLayout.CENTER);
+        panelSujet.add(labelSujet, BorderLayout.WEST);
+        panelSujet.add(textFieldSujet, BorderLayout.CENTER);
+        panelMessage.add(panelSujet, BorderLayout.NORTH);
 
-        textAreaMessage = new JTextArea(10, 40);
+        JPanel panelMessageText = new JPanel(new BorderLayout());
+        JLabel labelMessage = new JLabel("Message :");
+        panelMessageText.add(labelMessage, BorderLayout.NORTH);
+
+        textAreaMessage = new JTextArea(5, 40);
         textAreaMessage.setLineWrap(true);
         JScrollPane scrollPaneMessage = new JScrollPane(textAreaMessage);
-        panelMessage.add(scrollPaneMessage, BorderLayout.SOUTH);
+        scrollPaneMessage.setPreferredSize(new Dimension(600, 100));
+        panelMessageText.add(scrollPaneMessage, BorderLayout.CENTER);
 
-        add(panelMessage, BorderLayout.CENTER);
+        panelMessage.add(panelMessageText, BorderLayout.CENTER);
 
-        JPanel panelButtons = new JPanel(new BorderLayout());
-
+        JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton buttonEnvoyer = new JButton("Envoyer");
-        panelButtons.add(buttonEnvoyer, BorderLayout.CENTER);
-
         JButton buttonDeconnecter = new JButton("Déconnecter");
-        panelButtons.add(buttonDeconnecter, BorderLayout.EAST);
+        panelButtons.add(buttonEnvoyer);
+        panelButtons.add(buttonDeconnecter);
+        panelMessage.add(panelButtons, BorderLayout.SOUTH);
 
-        add(panelButtons, BorderLayout.SOUTH);
+        panelMain.add(panelMessage, BorderLayout.NORTH);
 
-        JPanel panelEvenements = new JPanel(new BorderLayout());
-        panelEvenements.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        listModelEvenements = new DefaultListModel<>();
-        JList<String> listEvenements = new JList<>(listModelEvenements);
-        JScrollPane scrollPaneEvenements = new JScrollPane(listEvenements);
-        panelEvenements.add(scrollPaneEvenements, BorderLayout.CENTER);
-
-        add(panelEvenements, BorderLayout.EAST);
+        JPanel panelLists = new JPanel(new GridLayout(1, 2));
 
         JPanel panelConnectedBavards = new JPanel(new BorderLayout());
         panelConnectedBavards.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -62,7 +61,21 @@ public class InterfaceBavard extends JFrame implements MessageObserver, OnLineBa
         JScrollPane scrollPaneConnectedBavards = new JScrollPane(listConnectedBavards);
         panelConnectedBavards.add(scrollPaneConnectedBavards, BorderLayout.CENTER);
 
-        add(panelConnectedBavards, BorderLayout.WEST);
+        panelLists.add(panelConnectedBavards);
+
+        JPanel panelEvenements = new JPanel(new BorderLayout());
+        panelEvenements.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        listModelEvenements = new DefaultListModel<>();
+        JList<String> listEvenements = new JList<>(listModelEvenements);
+        JScrollPane scrollPaneEvenements = new JScrollPane(listEvenements);
+        panelEvenements.add(scrollPaneEvenements, BorderLayout.CENTER);
+
+        panelLists.add(panelEvenements);
+
+        panelMain.add(panelLists, BorderLayout.CENTER);
+
+        add(panelMain);
 
         buttonEnvoyer.addActionListener(e -> {
             String sujet = textFieldSujet.getText();
@@ -86,6 +99,7 @@ public class InterfaceBavard extends JFrame implements MessageObserver, OnLineBa
         });
 
         batiment.getConcierge().addObserver(this);
+        updateConnectedBavardList();
         updateMessages();
         setVisible(true);
     }
@@ -94,7 +108,7 @@ public class InterfaceBavard extends JFrame implements MessageObserver, OnLineBa
         listModelEvenements.clear();
         List<PapotageEvent> messages = bavard.getMessages();
         if (messages.isEmpty()) {
-            listModelEvenements.addElement("Aucun message reçu pour le moment...");
+            listModelEvenements.addElement("Aucun message...");
         } else {
             for (PapotageEvent message : messages) {
                 if (!message.getSource().equals(bavard)) {
@@ -114,8 +128,8 @@ public class InterfaceBavard extends JFrame implements MessageObserver, OnLineBa
 
     public void updateConnectedBavardList() {
         listModelConnectedBavards.clear();
-        if (listModelEvenements.isEmpty()) {
-            listModelConnectedBavards.addElement("Aucun bavard connecté pour le moment...");
+        if (batiment.getConcierge().getConnectedBavards().isEmpty()) {
+            listModelConnectedBavards.addElement("Aucun bavard connecté...");
         } else {
             for (Bavard bavard : batiment.getConcierge().getConnectedBavards()) {
                 listModelConnectedBavards.addElement(bavard.getNom());

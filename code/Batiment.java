@@ -2,7 +2,7 @@ import java.util.Objects;
 
 class Batiment {
     private final Concierge concierge;
-    private InterfaceBatiment interfaceBatiment;
+    private final InterfaceBatiment interfaceBatiment;
 
     public Batiment() {
         this.concierge = new Concierge();
@@ -27,7 +27,7 @@ class Batiment {
     }
 
     public void updateBavardListInterface() {
-        interfaceBatiment.updateBavardList();;
+        interfaceBatiment.updateBavardList();
     }
 
     public Bavard getBavard(String nom) {

@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class InterfaceConcierge extends JFrame implements MessageObserver {
+public class InterfaceConcierge extends JFrame implements MessageListener {
     private final Batiment batiment;
     private final DefaultListModel<String> listModelMessages;
 

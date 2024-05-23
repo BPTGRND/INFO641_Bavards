@@ -6,8 +6,8 @@ public class InterfaceBatiment extends JFrame {
     private final JTextField textFieldNom;
     private final JComboBox<String> comboBoxBavards;
 
-    public InterfaceBatiment(Batiment b) {
-        this.batiment = b;
+    public InterfaceBatiment(Batiment batiment) {
+        this.batiment = batiment;
 
         new InterfaceConcierge(batiment);
 
@@ -37,19 +37,20 @@ public class InterfaceBatiment extends JFrame {
             if (!nom.isEmpty()) {
                 String nomLowerCase = nom.toLowerCase();
                 boolean bavardExists = false;
-                for (int i = 0; i < comboBoxBavards.getItemCount(); i++) {
-                    if (comboBoxBavards.getItemAt(i).toLowerCase().equals(nomLowerCase)) {
+                for (Bavard bavard : batiment.getConcierge().getBavards()) {
+                    if (bavard.getNom().equalsIgnoreCase(nomLowerCase)) {
                         bavardExists = true;
                         break;
                     }
                 }
                 if (!bavardExists) {
-                    Bavard bavard = b.creerBavard(nom);
+                    Bavard bavard = batiment.creerBavard(nom);
                     comboBoxBavards.addItem(bavard.getNom());
                     textFieldNom.setText("");
                     updateBavardList();
                     JOptionPane.showMessageDialog(InterfaceBatiment.this, "Le bavard " + nom + " à été créé avec succès !");
                 } else {
+                    textFieldNom.setText("");
                     JOptionPane.showMessageDialog(InterfaceBatiment.this, "Un bavard avec ce nom existe déjà. Veuillez choisir un autre nom.");
                 }
             } else {
@@ -60,8 +61,8 @@ public class InterfaceBatiment extends JFrame {
         buttonConnecter.addActionListener(e -> {
             String selectedBavard = (String) comboBoxBavards.getSelectedItem();
             if (selectedBavard != null) {
-                Bavard bavard = b.getBavard(selectedBavard);
-                b.connecterBavard(bavard);
+                Bavard bavard = batiment.getBavard(selectedBavard);
+                batiment.connecterBavard(bavard);
                 updateBavardList();
                 JOptionPane.showMessageDialog(InterfaceBatiment.this, "Le bavard " + selectedBavard + " à été connecté avec succès !");
                 batiment.getConcierge().notifyOnlineEvent(bavard);

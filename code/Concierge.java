@@ -5,7 +5,7 @@ class Concierge implements PapotageListener {
     private final List<Bavard> connectedBavards = new ArrayList<>();
     private final List<PapotageEvent> messages = new ArrayList<>();
 
-    private final List<MessageObserver> observers = new ArrayList<>();
+    private final List<MessageListener> observers = new ArrayList<>();
 
     public void ajouterBavard(Bavard bavard) {
         bavards.add(bavard);
@@ -39,7 +39,7 @@ class Concierge implements PapotageListener {
         return messages;
     }
 
-    public void addObserver(MessageObserver observer) {
+    public void addObserver(MessageListener observer) {
         observers.add(observer);
     }
 
@@ -47,14 +47,14 @@ class Concierge implements PapotageListener {
     }
 
     private void notifyObservers() {
-        for (MessageObserver observer : observers) {
+        for (MessageListener observer : observers) {
             observer.updateMessages();
         }
     }
 
     public void notifyOnlineEvent(Bavard bavard) {
         transmettreMessage(new PapotageEvent("S'est connecté !", "", bavard));
-        for (MessageObserver observer : observers) {
+        for (MessageListener observer : observers) {
             if (observer instanceof OnLineBavardListener) {
                 ((OnLineBavardListener) observer).onOnLineBavardEventReceived();
             }
@@ -63,14 +63,10 @@ class Concierge implements PapotageListener {
 
     public void OffLineBavardEvent(Bavard bavard) {
         transmettreMessage(new PapotageEvent("S'est déconnecté !", "", bavard));
-        for (MessageObserver observer : observers) {
+        for (MessageListener observer : observers) {
             if (observer instanceof OffLineBavardListener) {
                 ((OffLineBavardListener) observer).onOffLineBavardEventReceived();
             }
         }
     }
-}
-
-interface MessageObserver {
-    void updateMessages();
 }
