@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class InterfaceBavard extends JFrame implements PapotageListener, ConnexionBavardListener {
+public class InterfaceBavard extends JFrame implements PapotageListener {
     // ATTRIBUTS
     private final Bavard bavard;
     private final Batiment batiment;
@@ -102,7 +102,7 @@ public class InterfaceBavard extends JFrame implements PapotageListener, Connexi
         });
 
         batiment.getConcierge().addObserver(this);
-        onConnexionBavardEventReceived();
+        updateConnectedBavard();
         updateMessages();
         setVisible(true);
     }
@@ -122,14 +122,7 @@ public class InterfaceBavard extends JFrame implements PapotageListener, Connexi
         }
     }
 
-    // METHODES LISTENER
-    public void onPapotageEventReceived(PapotageEvent event) {
-        if (!event.getSource().equals(bavard)) {
-            updateMessages();
-        }
-    }
-
-    public void onConnexionBavardEventReceived() {
+    public void updateConnectedBavard() {
         listModelConnectedBavards.clear();
         if (batiment.getConcierge().getConnectedBavards().isEmpty()) {
             listModelConnectedBavards.addElement("Aucun bavard connecté...");
@@ -137,6 +130,14 @@ public class InterfaceBavard extends JFrame implements PapotageListener, Connexi
             for (Bavard bavard : batiment.getConcierge().getConnectedBavards()) {
                 listModelConnectedBavards.addElement(bavard.getNom());
             }
+        }
+    }
+
+    // METHODES LISTENER
+    public void onPapotageEventReceived(PapotageEvent event) {
+        updateConnectedBavard();
+        if (!event.getSource().equals(bavard)) {
+            updateMessages();
         }
     }
 }

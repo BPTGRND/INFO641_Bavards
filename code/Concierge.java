@@ -14,12 +14,12 @@ class Concierge implements PapotageListener {
 
     public void connecterBavard(Bavard bavard) {
         connectedBavards.add(bavard);
-        onPapotageEventReceived(new PapotageEvent("S'est connecté !", "", bavard));
+        bavard.envoyerMessage(this, "S'est connecté !", "");
     }
 
     public void deconnecterBavard(Bavard bavard) {
         connectedBavards.remove(bavard);
-        onPapotageEventReceived(new PapotageEvent("S'est déconnecté !", "", bavard));
+        bavard.envoyerMessage(this, "S'est déconnecté !", "");
     }
 
     public void addObserver(PapotageListener observer) {
