@@ -27,12 +27,6 @@ L'objectif principal de ce projet est de maîtriser le mécanisme de communicati
 
 - Gestion des utilisateurs connectés : envoi d'événements de connexion et de déconnexion aux autres utilisateurs.
 
-### Version "Étendue" (possibilités d'extension)
-
-- Filtre de messages : possibilité de filtrer les messages par utilisateur.
-- Messages à thème : les bavards peuvent spécifier le thème de leurs messages.
-- Discussions privées : possibilité d'inviter des utilisateurs à une discussion privée.
-
 ## Technologies utilisées
 
 - Java pour la logique métier.
