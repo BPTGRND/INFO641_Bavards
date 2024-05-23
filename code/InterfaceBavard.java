@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class InterfaceBavard extends JFrame implements PapotageListener, OnLineBavardListener, OffLineBavardListener {
+public class InterfaceBavard extends JFrame implements PapotageListener, ConnexionBavardListener {
     // ATTRIBUTS
     private final Bavard bavard;
     private final Batiment batiment;
@@ -102,23 +102,12 @@ public class InterfaceBavard extends JFrame implements PapotageListener, OnLineB
         });
 
         batiment.getConcierge().addObserver(this);
-        updateConnectedBavardList();
+        onConnexionBavardEventReceived();
         updateMessages();
         setVisible(true);
     }
 
     // METHODES
-    public void updateConnectedBavardList() {
-        listModelConnectedBavards.clear();
-        if (batiment.getConcierge().getConnectedBavards().isEmpty()) {
-            listModelConnectedBavards.addElement("Aucun bavard connecté...");
-        } else {
-            for (Bavard bavard : batiment.getConcierge().getConnectedBavards()) {
-                listModelConnectedBavards.addElement(bavard.getNom());
-            }
-        }
-    }
-
     public void updateMessages() {
         listModelEvenements.clear();
         List<PapotageEvent> messages = bavard.getMessages();
@@ -140,11 +129,14 @@ public class InterfaceBavard extends JFrame implements PapotageListener, OnLineB
         }
     }
 
-    public void onOnLineBavardEventReceived() {
-        updateConnectedBavardList();
-    }
-
-    public void onOffLineBavardEventReceived() {
-        updateConnectedBavardList();
+    public void onConnexionBavardEventReceived() {
+        listModelConnectedBavards.clear();
+        if (batiment.getConcierge().getConnectedBavards().isEmpty()) {
+            listModelConnectedBavards.addElement("Aucun bavard connecté...");
+        } else {
+            for (Bavard bavard : batiment.getConcierge().getConnectedBavards()) {
+                listModelConnectedBavards.addElement(bavard.getNom());
+            }
+        }
     }
 }

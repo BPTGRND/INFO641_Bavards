@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class InterfaceConcierge extends JFrame implements PapotageListener{
+public class InterfaceConcierge extends JFrame implements PapotageListener {
     // ATTRIBUTS
     private final Batiment batiment;
     private final DefaultListModel<String> listModelMessages;
