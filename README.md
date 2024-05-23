@@ -23,9 +23,9 @@ L'objectif principal de ce projet est de maîtriser le mécanisme de communicati
 - Une interface pour le concierge, affichant les messages reçus.
 - Chaque bavard a une interface pour envoyer des messages et accéder aux messages reçus.
 
-### Version "Fonctionnelle" (ajout)
+### Version "Fonctionnelle"
 
-- Gestion des utilisateurs connectés : envoi d'événements de connexion et de déconnexion aux autres utilisateurs.
+- Gestion des utilisateurs connectés : envoi d'événements de connexion et de déconnexion aux autres utilisateurs & affichage des utilisateurs connectés.
 
 ## Technologies utilisées
 
