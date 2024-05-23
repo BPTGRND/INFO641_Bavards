@@ -29,9 +29,8 @@ L'objectif principal de ce projet est de maîtriser le mécanisme de communicati
 
 ## Technologies utilisées
 
-- Java pour la logique métier.
-- [Swing](https://docs.oracle.com/javase/8/docs/api/javax/swing/package-summary.html) pour les interfaces graphiques (pour une version "à l'essentiel" simple).
-- [JavaFX](https://openjfx.io/) ou une autre bibliothèque pour des interfaces plus avancées (pour une version "fonctionnelle" ou "étendue").
+- Java pour la création de classes.
+- [Swing](https://docs.oracle.com/javase/8/docs/api/javax/swing/package-summary.html) pour les interfaces graphiques.
 
 ## Installation
 
