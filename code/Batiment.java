@@ -9,6 +9,8 @@ class Batiment {
     public Batiment() {
         this.concierge = new Concierge();
         this.interfaceBatiment = new InterfaceBatiment(this);
+        InterfaceConcierge interfaceConcierge = new InterfaceConcierge(this);
+        concierge.addObserver(interfaceConcierge);
     }
 
     // METHODES

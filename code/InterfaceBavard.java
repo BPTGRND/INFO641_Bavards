@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class InterfaceBavard extends JFrame implements MessageListener, OnLineBavardListener, OffLineBavardListener {
+public class InterfaceBavard extends JFrame implements PapotageListener, OnLineBavardListener, OffLineBavardListener {
     // ATTRIBUTS
     private final Bavard bavard;
     private final Batiment batiment;
@@ -119,7 +119,6 @@ public class InterfaceBavard extends JFrame implements MessageListener, OnLineBa
         }
     }
 
-    // METHODES LISTENER
     public void updateMessages() {
         listModelEvenements.clear();
         List<PapotageEvent> messages = bavard.getMessages();
@@ -131,6 +130,13 @@ public class InterfaceBavard extends JFrame implements MessageListener, OnLineBa
                     listModelEvenements.addElement(message.getSource().getNom() + ": " + message.getSujet() + " - " + message.getCorps());
                 }
             }
+        }
+    }
+
+    // METHODES LISTENER
+    public void onPapotageEventReceived(PapotageEvent event) {
+        if (!event.getSource().equals(bavard)) {
+            updateMessages();
         }
     }
 

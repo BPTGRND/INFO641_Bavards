@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class InterfaceConcierge extends JFrame implements MessageListener {
+public class InterfaceConcierge extends JFrame implements PapotageListener{
     // ATTRIBUTS
     private final Batiment batiment;
     private final DefaultListModel<String> listModelMessages;
@@ -22,21 +22,17 @@ public class InterfaceConcierge extends JFrame implements MessageListener {
         JScrollPane scrollPane = new JScrollPane(listMessages);
         add(scrollPane, BorderLayout.CENTER);
 
-        batiment.getConcierge().addObserver(this);
-        updateMessages();
+        listModelMessages.addElement("Aucun message pour le moment...");
+
         setVisible(true);
     }
 
-    // METHODES LISTENER
-    public void updateMessages() {
+    @Override
+    public void onPapotageEventReceived(PapotageEvent event) {
         listModelMessages.clear();
         List<PapotageEvent> messages = batiment.getConcierge().getMessages();
-        if (messages.isEmpty()) {
-            listModelMessages.addElement("Aucun message pour le moment...");
-        } else {
-            for (PapotageEvent message : messages) {
-                listModelMessages.addElement(message.getSource().getNom() + ": " + message.getSujet() + " - " + message.getCorps());
-            }
+        for (PapotageEvent message : messages) {
+            listModelMessages.addElement(message.getSource().getNom() + ": " + message.getSujet() + " - " + message.getCorps());
         }
     }
 }

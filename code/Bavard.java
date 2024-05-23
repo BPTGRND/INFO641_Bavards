@@ -13,7 +13,7 @@ class Bavard implements PapotageListener {
 
     // METHODES
     public void envoyerMessage(Concierge concierge, String sujet, String corps) {
-        concierge.transmettreMessage(new PapotageEvent(sujet, corps, this));
+        concierge.onPapotageEventReceived(new PapotageEvent(sujet, corps, this));
     }
 
     // METHODES LISTENER

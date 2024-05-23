@@ -10,7 +10,6 @@ public class InterfaceBatiment extends JFrame {
     // CONSTRUCTEUR
     public InterfaceBatiment(Batiment batiment) {
         this.batiment = batiment;
-        new InterfaceConcierge(batiment);
 
         // CONSTRUCTION DE L'INTERFACE
         setTitle("Interface Batiment");
