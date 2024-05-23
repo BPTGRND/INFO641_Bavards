@@ -26,3 +26,6 @@ replay_pid*
 # ide
 .idea
 out/
+
+# other
+code.iml
