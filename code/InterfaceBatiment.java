@@ -2,15 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceBatiment extends JFrame {
+    // ATTRIBUTS
     private final Batiment batiment;
     private final JTextField textFieldNom;
     private final JComboBox<String> comboBoxBavards;
 
+    // CONSTRUCTEUR
     public InterfaceBatiment(Batiment batiment) {
         this.batiment = batiment;
-
         new InterfaceConcierge(batiment);
 
+        // CONSTRUCTION DE L'INTERFACE
         setTitle("Interface Batiment");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,6 +34,7 @@ public class InterfaceBatiment extends JFrame {
         JButton buttonConnecter = new JButton("Connecter");
         add(buttonConnecter);
 
+        // BOUTON CREER BAVARD
         buttonCreerBavard.addActionListener(e -> {
             String nom = textFieldNom.getText().trim();
             if (!nom.isEmpty()) {
@@ -58,14 +61,13 @@ public class InterfaceBatiment extends JFrame {
             }
         });
 
+        // BOUTON CONNECTER BAVARD
         buttonConnecter.addActionListener(e -> {
             String selectedBavard = (String) comboBoxBavards.getSelectedItem();
             if (selectedBavard != null) {
-                Bavard bavard = batiment.getBavard(selectedBavard);
+                Bavard bavard = batiment.getBavardByName(selectedBavard);
                 batiment.connecterBavard(bavard);
-                updateBavardList();
                 JOptionPane.showMessageDialog(InterfaceBatiment.this, "Le bavard " + selectedBavard + " à été connecté avec succès !");
-                batiment.getConcierge().notifyOnlineEvent(bavard);
                 new InterfaceBavard(bavard, batiment);
             } else {
                 JOptionPane.showMessageDialog(InterfaceBatiment.this, "Veuillez sélectionner un bavard à connecter.");
@@ -76,6 +78,7 @@ public class InterfaceBatiment extends JFrame {
         setVisible(true);
     }
 
+    // METHODES
     public void updateBavardList() {
         comboBoxBavards.removeAllItems();
         for (Bavard bavard : batiment.getConcierge().getBavards()) {

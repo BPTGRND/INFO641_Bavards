@@ -3,12 +3,15 @@ import java.awt.*;
 import java.util.List;
 
 public class InterfaceConcierge extends JFrame implements MessageListener {
+    // ATTRIBUTS
     private final Batiment batiment;
     private final DefaultListModel<String> listModelMessages;
 
+    // CONSTRUCTEUR
     public InterfaceConcierge(Batiment batiment) {
         this.batiment = batiment;
 
+        // CONSTRUCTION DE L'INTERFACE
         setTitle("Interface Concierge");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,6 +27,7 @@ public class InterfaceConcierge extends JFrame implements MessageListener {
         setVisible(true);
     }
 
+    // METHODES LISTENER
     public void updateMessages() {
         listModelMessages.clear();
         List<PapotageEvent> messages = batiment.getConcierge().getMessages();

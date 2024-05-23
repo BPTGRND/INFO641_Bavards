@@ -3,6 +3,7 @@ import java.awt.*;
 import java.util.List;
 
 public class InterfaceBavard extends JFrame implements MessageListener, OnLineBavardListener, OffLineBavardListener {
+    // ATTRIBUTS
     private final Bavard bavard;
     private final Batiment batiment;
     private final JTextField textFieldSujet;
@@ -10,10 +11,12 @@ public class InterfaceBavard extends JFrame implements MessageListener, OnLineBa
     private final DefaultListModel<String> listModelEvenements;
     private final DefaultListModel<String> listModelConnectedBavards;
 
+    // CONSTRUCTEUR
     public InterfaceBavard(Bavard bavard, Batiment batiment) {
         this.bavard = bavard;
         this.batiment = batiment;
 
+        // CONSTRUCTION DE L'INTERFACE
         setTitle("Interface Bavard - " + bavard.getNom());
         setSize(400, 350);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -77,6 +80,7 @@ public class InterfaceBavard extends JFrame implements MessageListener, OnLineBa
 
         add(panelMain);
 
+        // BOUTON ENVOYER MESSAGE
         buttonEnvoyer.addActionListener(e -> {
             String sujet = textFieldSujet.getText();
             String messageTexte = textAreaMessage.getText();
@@ -91,10 +95,9 @@ public class InterfaceBavard extends JFrame implements MessageListener, OnLineBa
             }
         });
 
+        // BOUTON DECONNEXION
         buttonDeconnecter.addActionListener(e -> {
             batiment.deconnecterBavard(bavard);
-            batiment.getConcierge().OffLineBavardEvent(bavard);
-            batiment.updateBavardListInterface();
             dispose();
         });
 
@@ -104,6 +107,19 @@ public class InterfaceBavard extends JFrame implements MessageListener, OnLineBa
         setVisible(true);
     }
 
+    // METHODES
+    public void updateConnectedBavardList() {
+        listModelConnectedBavards.clear();
+        if (batiment.getConcierge().getConnectedBavards().isEmpty()) {
+            listModelConnectedBavards.addElement("Aucun bavard connecté...");
+        } else {
+            for (Bavard bavard : batiment.getConcierge().getConnectedBavards()) {
+                listModelConnectedBavards.addElement(bavard.getNom());
+            }
+        }
+    }
+
+    // METHODES LISTENER
     public void updateMessages() {
         listModelEvenements.clear();
         List<PapotageEvent> messages = bavard.getMessages();
@@ -124,16 +140,5 @@ public class InterfaceBavard extends JFrame implements MessageListener, OnLineBa
 
     public void onOffLineBavardEventReceived() {
         updateConnectedBavardList();
-    }
-
-    public void updateConnectedBavardList() {
-        listModelConnectedBavards.clear();
-        if (batiment.getConcierge().getConnectedBavards().isEmpty()) {
-            listModelConnectedBavards.addElement("Aucun bavard connecté...");
-        } else {
-            for (Bavard bavard : batiment.getConcierge().getConnectedBavards()) {
-                listModelConnectedBavards.addElement(bavard.getNom());
-            }
-        }
     }
 }
